@@ -1,19 +1,19 @@
 apply plugin: 'com.android.application'
 
-Properties properties = new Properties()
-def localProp = file(project.rootProject.file('local.properties'))
-if (localProp.exists()) {
-    properties.load(localProp.newDataInputStream())
-}
-def keyFile = file(properties.getProperty("keystore.path") ?: "/tmp/does_not_exist")
+//Properties properties = new Properties()
+//def localProp = file(project.rootProject.file('local.properties'))
+//if (localProp.exists()) {
+//    properties.load(localProp.newDataInputStream())
+//}
+//def keyFile = file(properties.getProperty("keystore.path") ?: "/tmp/does_not_exist")
 
 android {
     signingConfigs {
         config {
-            keyAlias properties.getProperty("keystore.alias")
-            keyPassword properties.getProperty("keystore.pwd")
-            storeFile keyFile
-            storePassword properties.getProperty("keystore.alias_pwd")
+            storeFile file('../app/HQ_C100.keystore')
+            storePassword '000000'
+            keyAlias 'desay'
+            keyPassword '000000'
         }
     }
 
@@ -40,9 +40,8 @@ android {
         aosp {
             dimension 'main'
             //matchingFallbacks ['aosp']
-            if (keyFile.exists()) {
-                signingConfig signingConfigs.config
-            }
+            signingConfig signingConfigs.config
+
         }
 
         fdroid {
